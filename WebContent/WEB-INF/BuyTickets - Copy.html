@@ -1,0 +1,259 @@
++<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta name="description" content="Cheap tickets from Bulgaria to all around Europe and more!">
+  <meta charset="utf8">
+  <meta name="keywords" content="Airlines,Tickets,UKTC,Low prices">
+  <title>Reserve Ticket</title>
+  <!-- <link href="css/buyTickets.css" rel="stylesheet"> -->
+  <script type="text/javascript" src="jquery.min.js"></script>
+</head>
+<body>
+  <h1 style="text-align: center">UKTC Airlines</h1>
+  <h3>Fill the fields to buy a ticket.</h3>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.jsp">Home</a></li>
+        <li><a href="BuyTickets.jsp">Buy Tickets</a></li>
+        <li><a href="ExistingReservation.jsp">Cancel reservation</a></li>
+        <li><a href="AboutUs.jsp">About us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <form name="reserveForm" method="post" action="TicketReserveServlet" id="reserve_form">
+    <div>
+      <label for="input_name">Enter your name:</label>
+      <input id="input_name" type="text" name="name" id="name" />
+    </div>
+    <div>
+      <label for="input_telephone">Enter your telephone number:</label>
+      <input id="input_telephone" type="text" name="telNum" id="telNum"  /><br/>
+    </div>
+
+    <div>
+      <label for="input_email">Enter your email:</label>
+      <input id="input_email" type="text" name="email" id="email" /><br/>
+    </div>
+
+    <div>
+      <label for="select_route">Chose route:</label>
+      <div>
+        <select id="routes" name="place">
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label>Type:</label><br>
+      <label for="ticket_one_way">One-Way</label>
+      <input id="ticket_one_way" type="radio" name="type"  value="oneWay" onClick="Hide('returnDate', this); Hide('comingDate', this)" /><br>
+    </div>
+
+    <div>
+      <label for="ticket_two_way">Two-Way</label>
+      <input id="ticket_two_way" type="radio" name="type" value="twoWay" onClick="Reveal('returnDate', this); Reveal('comingDate', this) " /><br>
+    </div>
+
+    <div>
+      <label for="">Travel Date: <input id="dateField" type ="date" name = "date" />
+      <label for="backDate" id="comingDate" style="display:none">Return date:</label>
+      <input type ="date" name = "returnDate"  id="returnDate" style= "display:none" />
+    </div>
+
+    <input type="submit" value="Make reservation" id ="reserve"  />
+  </form>
+
+
+
+<script type="text/javascript">
+    var dest = new Object;
+    var newHTML;
+
+    dest = {
+      1 : {
+        id    : "1",
+        place : "Sofia-Moscow",
+        time  : "14:00h-17:10h",
+        price : "350"
+      },
+      2 : {
+        id    : "2",
+        place : "Sofia-Istanbul",
+        time  : "10:00h-11:10h",
+        price : "100"
+      },
+      3 : {
+        id    : "3",
+        place : "Sofia-Madrid",
+        time  : "12:00h-14:20h",
+        price : "280"
+      },
+      4 : {
+        id    : "4",
+        place : "Sofia-Athens",
+        time  : "15:30h-16:10h",
+        price : "90"
+      },
+      5 : {
+        id    : "5",
+        place : "Sofia-Paris",
+        time  : "09:30h-11:15h",
+        price : "235"
+      },
+      6 : {
+        id    : "6",
+        place : "Sofia-Frankfurt",
+        time  : "16:30h-18:00h",
+        price : "190"
+      },
+      7 : {
+        id    : "7",
+        place : "Sofia-Viena",
+        time  : "13:00h-14:30h",
+        price : "170"
+      },
+      8 : {
+        id    : "8",
+        place : "Sofia-London",
+        time  : "14:00h-17:10h",
+        price : "350"
+      },
+      9 : {
+        id    : "9",
+        place : "Sofia-Berlin",
+        time  : "10:00h-12:20h",
+        price : "225"
+      },
+      10 : {
+        id    : "10",
+        place : "Sofia-Rome",
+        time  : "08:00h-09:40h",
+        price : "190"
+      },
+      11 : {
+        id    : "11",
+        place : "Moscow-Sofia",
+        time  : "20:00h-22:00h",
+        price : "220"
+      },
+      12 : {
+        id    : "12",
+        place : "Istanbul-Sofia",
+        time  : "14:00h-15:10h",
+        price : "100"
+      },
+      13 : {
+        id    : "13",
+        place : "Madrid-Sofia",
+        time  : "18:00h-20:20h",
+        price : "280"
+      },
+      14 : {
+        id    : "14",
+        place : "Athens-Sofia",
+        time  : "19:00h-19:40h",
+        price : "90"
+      },
+      15 : {
+        id    : "15",
+        place : "Paris-Sofia",
+        time  : "15:00h-16:45h",
+        price : "235"
+      },
+      16 : {
+        id    : "16",
+        place : "Frankfurt-Sofia",
+        time  : "21:00h-22:30h",
+        price : "190"
+      },
+      17 : {
+        id    : "17",
+        place : "Viena-Sofia",
+        time  : "20:00h-21:30h",
+        price : "170"
+      },
+      18 : {
+        id    : "18",
+        place : "London-Sofia",
+        time  : "20:00h-23:10h",
+        price : "350"
+      },
+      19 : {
+        id    : "19",
+        place : "Berlin-Sofia",
+        time  : "14:30h-16:50h",
+        price : "225"
+      },
+      20 : {
+        id    : "20",
+        place : "Rome-Sofia",
+        time  : "12:30h-14:10h",
+        price : "190"
+      }
+    };
+
+    $(`#ticket_one_way`).on(`change`, function(){
+      var i = 1;
+
+      $("#routes").html("");
+
+
+
+      while(i <= Object.keys(dest).length){
+        $("#routes").append(
+          "<option>" +dest[i].place+ " - " + dest[i].time + " - " + dest[i].price*2*0.1 + " BGN </option"
+        );
+	      i++;
+       }
+    });
+
+
+    $(`#ticket_two_way`).on(`change`, function(){
+      var i = 1;
+
+      $("#routes").html("");
+
+      while(i <= Object.keys(dest).length){
+        $("#routes").append(
+          "<option>" +dest[i].place+ " - " + dest[i].time + " - " + dest[i].price + " BGN </option"
+        );
+	      i++;
+       }
+    });
+
+
+    function Reveal (it, box) {
+    	var vis = (box.checked) ? "block" : "none";
+    	document.getElementById(it).style.display = vis;
+    	}
+
+
+    //hiding datepicker and its label if two-way is not checked
+    	function Hide (it, box) {
+    	var vis = (box.checked) ? "none" : "none";
+    	document.getElementById(it).style.display = vis;
+    	}
+
+    //hiding button until the fields are filled
+    $(document).ready(function(){
+
+
+
+
+	});
+
+
+
+
+
+
+</script>
+</body>
+</html>
